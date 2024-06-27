@@ -183,7 +183,7 @@ gcode:
     {% endif %}
 
     {% if klippain_mmu_enabled %}
-        {% if printer.mmu.enabled and printer.configfile.settings.mmu.happy_hare_version < 2.5 and printer.mmu.print_start_detection|int == 0 %}
+        {% if printer.mmu.enabled and printer.mmu.print_start_detection|int == 0 %}
             _MMU_PRINT_START
         {% endif %}
     {% endif %}
