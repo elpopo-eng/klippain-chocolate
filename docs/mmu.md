@@ -85,7 +85,7 @@ You can also use the `MMU_GATE_MAP GATE=n SPOOLID=id` macro at runtime to change
 ### Variable check error
 
 ```
-MMU support is enabled in Klippain, but some variables are missing from your variables.cfg. Please update your template or refer to the corresponding documentation: https://github.com/Frix-x/klippain/blob/main/docs/mmu.md
+MMU support is enabled in Klippain, but some variables are missing from your variables.cfg. Please update your template or refer to the corresponding documentation: https://github.com/elpopo-eng/klippain-chocolate/blob/main/docs/mmu.md
 ```
  
 If you have the previous message in the console when Klippain is starting, you will want to update your Klippain `variables.cfg` template file or check that the MMU variables are set correctly in it:

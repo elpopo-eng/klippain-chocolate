@@ -294,4 +294,4 @@ restart_klipper
 wget -O - https://raw.githubusercontent.com/Frix-x/klippain-shaketune/main/install.sh | bash
 
 echo "[POST-INSTALL] Everything is ok, Klippain installed and up to date!"
-echo "[POST-INSTALL] Be sure to check the breaking changes on the release page: https://github.com/Frix-x/klippain/releases"
+echo "[POST-INSTALL] Be sure to check the breaking changes on the release page: https://github.com/elpopo-eng/klippain-chocolate/releases"
