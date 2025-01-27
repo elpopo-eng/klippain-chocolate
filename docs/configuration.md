@@ -1,10 +1,14 @@
-# Configuration of Klippain
+# Configuration of Klippain-chocolate
 
 Klippain requires a few simple steps to configure and customize it for your printer: please follow the following documentation step by step in order to get your printer running.
 
   > **Warning**:
   >
   > General rule to keep the auto-update feature working: **never modify Klippain files directly**, but instead add overrides as per the following documentation. To proceed, you can modify all the pre-installed templates in your config root folder (`printer.cfg`, `mcu.cfg`, `variables.cfg` and `overrides.cfg` and, if applicable, the MMU configs files in the `mmu` directory created when you install Happy-Hare) as they will be preserved on update.
+
+  > **Breaking Change**:
+  >
+  > The `sense_resistor` parameter is now mandatory for TMC2208, TMC2209, and TMC5160 drivers in Klippain-chocolate. No default value is provided, so you must set these values in an override. Refer to the [TMC sense_resistor documentation](./TMC_sense_resistor.md) for more details.
 
 ## 1. MCU Settings
 
