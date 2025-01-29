@@ -45,8 +45,8 @@ Klippain will work out of the box with most slicers on the market and your profi
 In addition, there are a few other optional parameters that are supported in Klippain (they must be added on the same line after the first parameters):
   - `CHAMBER=[chamber_temperature]` to set a target heatsoak temperature during the START_PRINT sequence.
   - `TOTAL_LAYER=[total_layer_count]` to be able to set the PRINT_STATS_INFOS in Klipper. If you use this, you will also need to add the corresponding `SET_PRINT_STATS_INFO CURRENT_LAYER={layer_num}` to your slicer custom layer change gcode.
-  - `TOOLS_USED=!referenced_tools!` *(only for MMU users)* is highly recommended to check only the used tools with the HappyHare [Moonraker gcode preprocessor](https://github.com/moggieuk/Happy-Hare/blob/main/doc/gcode_preprocessing.md).
-  - `CHECK_GATES=0` or `1` *(only for MMU users)* that will override the corresponding variable defined in Klippain `variables.cfg` for this specific print.
+  - `REFERENCED_TOOLS=!referenced_tools!` *(only for MMU users)* is highly recommended to check only the used tools with the HappyHare [Moonraker gcode preprocessor](https://github.com/moggieuk/Happy-Hare/blob/main/doc/gcode_preprocessing.md).
+  - **Deprecated** `CHECK_GATES=0` or `1` *(only for MMU users)* that will override the corresponding variable defined in Klippain `variables.cfg` for this specific print.
   - `SYNC_MMU_EXTRUDER=1` *(only for MMU users)* if you want to stay with the default `sync_to_extruder: 0` value of HappyHare (defined in `mmu/mmu_parameters.cfg`), but still want to use the sync for a specific print.
 
 
