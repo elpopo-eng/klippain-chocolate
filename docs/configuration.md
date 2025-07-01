@@ -1,10 +1,14 @@
-# Configuration of Klippain
+# Configuration of Klippain-chocolate
 
 Klippain requires a few simple steps to configure and customize it for your printer: please follow the following documentation step by step in order to get your printer running.
 
   > **Warning**:
   >
   > General rule to keep the auto-update feature working: **never modify Klippain files directly**, but instead add overrides as per the following documentation. To proceed, you can modify all the pre-installed templates in your config root folder (`printer.cfg`, `mcu.cfg`, `variables.cfg` and `overrides.cfg` and, if applicable, the MMU configs files in the `mmu` directory created when you install Happy-Hare) as they will be preserved on update.
+
+  > **Breaking Change**:
+  >
+  > The `sense_resistor` parameter is now mandatory for TMC2208, TMC2209, and TMC5160 drivers in Klippain-chocolate. No default value is provided, so you must set these values in an override. Refer to the [TMC sense_resistor documentation](./TMC_sense_resistor.md) for more details.
 
 ## 1. MCU Settings
 
@@ -43,10 +47,10 @@ Klippain will work out of the box with most slicers on the market and your profi
 |[PrusaSlicer](https://github.com/prusa3d/PrusaSlicer)|`START_PRINT EXTRUDER_TEMP={first_layer_temperature[initial_extruder]} BED_TEMP=[first_layer_bed_temperature] MATERIAL=[filament_type] SIZE={first_layer_print_min[0]}_{first_layer_print_min[1]}_{first_layer_print_max[0]}_{first_layer_print_max[1]} INITIAL_TOOL={initial_extruder}`|
 
 In addition, there are a few other optional parameters that are supported in Klippain (they must be added on the same line after the first parameters):
-  - `CHAMBER=[chamber_temperature]` *(for SuperSlicer and OrcaSlicer)* or `CHAMBER=[idle_temperature]` *(for PrusaSlicer)* to set a target heatsoak temperature during the START_PRINT sequence.
+  - `CHAMBER=[chamber_temperature]` to set a target heatsoak temperature during the START_PRINT sequence.
   - `TOTAL_LAYER=[total_layer_count]` to be able to set the PRINT_STATS_INFOS in Klipper. If you use this, you will also need to add the corresponding `SET_PRINT_STATS_INFO CURRENT_LAYER={layer_num}` to your slicer custom layer change gcode.
-  - `TOOLS_USED=!referenced_tools!` *(only for MMU users)* is highly recommended to check only the used tools with the HappyHare [Moonraker gcode preprocessor](https://github.com/moggieuk/Happy-Hare/blob/main/doc/gcode_preprocessing.md).
-  - `CHECK_GATES=0` or `1` *(only for MMU users)* that will override the corresponding variable defined in Klippain `variables.cfg` for this specific print.
+  - `REFERENCED_TOOLS=!referenced_tools!` *(only for MMU users)* is highly recommended to check only the used tools with the HappyHare [Moonraker gcode preprocessor](https://github.com/moggieuk/Happy-Hare/blob/main/doc/gcode_preprocessing.md).
+  - **Deprecated** `CHECK_GATES=0` or `1` *(only for MMU users)* that will override the corresponding variable defined in Klippain `variables.cfg` for this specific print.
   - `SYNC_MMU_EXTRUDER=1` *(only for MMU users)* if you want to stay with the default `sync_to_extruder: 0` value of HappyHare (defined in `mmu/mmu_parameters.cfg`), but still want to use the sync for a specific print.
 
 
