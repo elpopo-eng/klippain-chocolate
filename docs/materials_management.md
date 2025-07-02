@@ -1,6 +1,15 @@
 ## Materials Presets Management in Klippain-Chocolate
 
-Klippain's `START_PRINT` macro, adjusts printer behavior based on material presets.
+Klippain Chocolate's `START_PRINT` macro, is able to adjust printer behavior based on material presets.
+
+> [!NOTE]
+The following `_USER_VARIABLES` parameters are not used anymore and transfered to `gcode_macro _MATERIAL` array : 
+`print_default_bed_temp`, `print_default_extruder_temp`, `print_default_chamber_temp`,
+`print_default_chamber_max_heating_time`, `print_default_soak`, `print_default_material`, `purge_length`,
+`standby_retract_length`, `purge_speed`, `retract_length`, `unretract_length`, `prime_line_flowrate`,
+`prime_line_pressure_length`
+
+If existing, `material_parameters` is migrated into the material array in the save_variables file.
 
 ### Default Material Settings
 
@@ -23,6 +32,12 @@ variable_default: {
     "purge_retract_distance": 20,       # Amount to retract after purge (in mm) (Should be near the prime_pressure_length)
     "purge_speed": 2.5,                 # Speed to purge (in mm/s)
     "purge_distance": 30,               # Amount to purge (in mm)
+
+    "bed_temp":  100,
+    "chamber_temp": 0,
+    "extruder_temp": 240,
+    "chamber_maxtime": 15,
+    "soak": 8,
     }
 ```
 
@@ -32,5 +47,5 @@ Material references are passed from the slicer to the printer via the `start_gco
 
 - `SET_MATERIAL`: Add or modify material parameters. If the `NAME` parameter is not provided, it will modify the current material. A prompt will ask if you want to retain the values across restarts. The new material will inherit default settings for any unspecified parameters.
 - `REMOVE_MATERIAL`: Delete the material. If the `NAME` parameter is not provided, it will delete the current material. A prompt will ask if you want to permanently remove the material across restarts.
-- `SELECT_MATERIAL`: Choose material settings from list. This macro is a UI helper and MUST NOT be used inside `START_PRINT`. 
+- `SELECT_MATERIAL`: Choose material settings from list. This macro is a UI helper and **MUST NOT** be used inside `START_PRINT`. 
 

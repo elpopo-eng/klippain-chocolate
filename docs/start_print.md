@@ -36,3 +36,10 @@ variable_startprint_actions_array:[
       {'command': 'PRIME_Z_LINE'}
      ] 
 ```
+
+## Available parameters for `START_PRINT`
+
+The `START_PRINT` macro also checks if the parameters sent from the slicer are valid. Availables parameters are
+`BED_TEMP`, `EXTRUDER_TEMP`, `CHAMBER_TEMP`, `Z_ADJUST`, `SOAK`, `CHAMBER_MAXTIME`, `MATERIAL`, `SIZE`, `MESH`,`ADAPTIVE_PRIMELIME`, `INITIAL_TOOL`, `REFERENCED_TOOLS`, `SYNC_MMU_EXTRUDER`, `TOTAL_LAYER`.
+
+If a user need a custom parameters, its name can be added in variables. (_eg. `variable_start_gcode_user_params: ["MY_CUSTOM_PARAM1", "MY_CUSTOM_PARAM2" ]`_ )

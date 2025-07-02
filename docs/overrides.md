@@ -55,7 +55,7 @@ sensor_type: ...
 
 You can even redefine a full macro! For example if the default Klippain prime line is not adapted to your needs, just override the macro like that:
 ```
-[gcode_macro _MODULE_PRIMELINE]
+[gcode_macro _START_PRINT_ACTION_PRIMELINE]
 gcode:
   # Put your custom prime line G-code here...
 ```
