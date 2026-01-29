@@ -61,19 +61,19 @@ MMU_START_CHECK
 START_PRINT EXTRUDER_TEMP={first_layer_temperature[initial_extruder] + extruder_temperature_offset[initial_extruder]} BED_TEMP=[first_layer_bed_temperature] MATERIAL=[filament_type] SIZE={first_layer_print_min[0]}_{first_layer_print_min[1]}_{first_layer_print_max[0]}_{first_layer_print_max[1]}
 ```
 
-### Check gates on START_PRINT
+### Check gates on START_PRINT **Deprecated**
 
 If you want to check the gates at the start of a print to avoid an error when using a gate that was previously marked as empty, it is recommended to set `variable_mmu_check_gates_on_start_print: True` in your Klippain `variables.cfg`.
 
   > **Note**:
   >
-  > Be sure to also include `TOOLS_USED=!referenced_tools!` in your slicer custom start print gcode in order to allow the [HappyHare Moonraker gcode preprocessor](https://github.com/moggieuk/Happy-Hare/blob/main/doc/gcode_preprocessing.md) to work correctly and to ensure that all tools are checked.
+  > Be sure to also include `REFERENCED_TOOLS=!referenced_tools!` in your slicer custom start print gcode in order to allow the [HappyHare Moonraker gcode preprocessor](https://github.com/moggieuk/Happy-Hare/blob/main/doc/gcode_preprocessing.md) to work correctly and and to ensure that all tools are checked.
 
 ### Early check errors during START_PRINT
 
 In Klippain, you have two options to control how and when MMU errors are detected during the start of a print:
   
-  1. **Managed by Klippain**: This allows the system to check for errors during the sequence and, if errors are detected, to stop the sequence immediately so that you can troubleshoot the MMU. However, you'll need to restart the print after the MMU problems are fixed.
+  1. **Managed by Klippain (deprecated)**: This allows the system to check for errors during the sequence and, if errors are detected, to stop the sequence immediately so that you can troubleshoot the MMU. However, you'll need to restart the print after the MMU problems are fixed.
   To enable this mode, set `variable_mmu_check_gates_on_start_print: True` in your Klippain `variables.cfg`. Note that when this is set, the original `print_start_detection` parameter of HH will have no effect, as Klippain will take over the management of MMU state changes.
 
   1. **Managed by HappyHare**: This allows HappyHare to automatically detect the start and end of a print. However, if an MMU error occurs, the system will only pause at the very end of the START_PRINT sequence, meaning you'll have to wait until then to fix any MMU problems. However, once the problem is resolved, you can resume printing, provided you have been able to manually purge, clean, and prepare the nozzle for printing.
@@ -97,7 +97,7 @@ If you want to print without using the MMU features, you can use the MMU bypass 
   1. Select the bypass mode with `MMU_SELECT_BYPASS`.
   1. Finally, manually insert the filament into the bowden tube up to the extruder gears and load the filament with the `MMU_LOAD` command or start the print (the `START_PRINT` sequence will automatically try to load the filament into the toolhead).
 
-At the end of the print, you can use the `MMU_UNLOAD` command (if `variable_mmu_unload_on_end_print` is set to False in Klippain `variables.cfg`, otherwise it is unloaded automatically) to unload the filament from the extruder and then manually pull it out of the bowden tube.
+At the end of the print, you can use the `MMU_UNLOAD` command (if `unload_tool` is set to False in HappyHare `mmu_macro_vars.cfg`, otherwise it is unloaded automatically) to unload the filament from the extruder and then manually pull it out of the bowden tube.
 
 ### Spoolman support with MMU
 
@@ -114,9 +114,11 @@ You can also use the `MMU_GATE_MAP GATE=n SPOOLID=id` macro at runtime to change
 
 ## MMU error messages in Klippain
 
-### Variable check error
+### Variable check error **Deprecated : use HappyHare config**
 
-  > MMU support is enabled in Klippain, but some variables are missing from your variables.cfg. Please update your template or refer to the corresponding documentation: https://github.com/Frix-x/klippain/blob/main/docs/mmu.md
+```
+MMU support is enabled in Klippain, but some variables are missing from your variables.cfg. Please update your template or refer to the corresponding documentation: https://github.com/elpopo-eng/klippain-chocolate/blob/main/docs/mmu.md
+```
  
 If you have the previous message in the console when Klippain is starting, you will want to update your Klippain `variables.cfg` template file or check that the MMU variables are set correctly in it:
   - `variable_mmu_force_homing_in_start_print`: True or False

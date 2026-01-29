@@ -79,7 +79,7 @@ function check_download {
 
     if [ ! -d "${FRIX_CONFIG_PATH}" ]; then
         echo "[DOWNLOAD] Downloading Klippain repository..."
-        if git -C $frixtemppath clone -b $frixbranchname https://github.com/Frix-x/klippain.git $frixreponame; then
+        if git -C $frixtemppath clone -b $frixbranchname https://github.com/elpopo-eng/klippain-chocolate.git $frixreponame; then
             printf "[DOWNLOAD] Download complete!\n\n"
         else
             echo "[ERROR] Download of Klippain git repository failed!"
@@ -137,7 +137,9 @@ function install_config {
     # CHMOD the scripts to be sure they are all executables (Git should keep the modes on files but it's to be sure)
     chmod +x ${FRIX_CONFIG_PATH}/install.sh
     chmod +x ${FRIX_CONFIG_PATH}/uninstall.sh
-
+    chmod +x ${FRIX_CONFIG_PATH}/scripts/system_info.py
+    chmod +x ${FRIX_CONFIG_PATH}/scripts/service_restart.py
+    
     # Symlink the gcode_shell_command.py file in the correct Klipper folder (erased to always get the last version)
     ln -fsn ${FRIX_CONFIG_PATH}/scripts/gcode_shell_command.py ${KLIPPER_PATH}/klippy/extras
 
@@ -294,4 +296,4 @@ restart_klipper
 wget -O - https://raw.githubusercontent.com/Frix-x/klippain-shaketune/main/install.sh | bash
 
 echo "[POST-INSTALL] Everything is ok, Klippain installed and up to date!"
-echo "[POST-INSTALL] Be sure to check the breaking changes on the release page: https://github.com/Frix-x/klippain/releases"
+echo "[POST-INSTALL] Be sure to check the breaking changes on the release page: https://github.com/elpopo-eng/klippain-chocolate/releases"
