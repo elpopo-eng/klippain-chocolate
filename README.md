@@ -35,6 +35,23 @@ Finally, Klippain requires a few simple steps to configure and customize it for 
   >
   > General rule to keep the auto-update feature working: **never modify Klippain files directly**, but instead add overrides as per [the documentation](./docs/overrides.md)! To proceed, you can modify all the pre-installed templates in your config root folder (`printer.cfg`, `mcu.cfg`, `variables.cfg` and `overrides.cfg`) as they will be preserved on update.
 
+### Installation Options
+
+The install script supports several command line options:
+
+```bash
+cd ~/klippain_config
+bash ./install.sh [-b <branch_name>] [--reinstall-templates] [--reinstall-addons]
+```
+
+Available options:
+- `-b` or `--branch`: Select Klippain branch to install
+  - `main`: Default stable branch
+  - `beta`: Advanced features branch
+  - `develop`: Latest development branch
+- `--reinstall-templates`: Regenerate MCU templates in `mcus.cfg` (previous file backed up)
+- `--reinstall-addons`: Prompt to install optional components like Shaketune
+
 
 ## Removing Klippain
 

@@ -4,9 +4,10 @@
 ######## AUTOMATED UNINSTALL SCRIPT #############
 #################################################
 # Written by Frix_x
-# @version: 1.0
+# @version: 1.1
 
 # CHANGELOG:
+#   v1.1: fix prompt function 
 #   v1.0: first version of the script to allow an user to revert to his old config
 #         in case the install script was called by error... ;)
 
@@ -39,19 +40,13 @@ function preflight_checks {
         exit -1
     fi
 
-    local uninstall_klippain_answer
-    if [ ! -f "${USER_CONFIG_PATH}/.VERSION" ]; then
+    if [ -f "${USER_CONFIG_PATH}/.VERSION" ]; then
+        KLIPPAIN_CONFIG_FOUND=true
         echo "[PRE-CHECK] This uninstall script will fully remove Klippain"
         echo "[PRE-CHECK] If a backup from your old configuration (before using Klippain) is found, it will be restored"
         echo "[PRE-CHECK] Be sure that the printer is idle before continuing!"
         
-        read < /dev/tty -rp "[PRE-CHECK] Are you sure want to proceed and uninstall Klippain? (y/N) " uninstall_klippain_answer
-        if [[ -z "$uninstall_klippain_answer" ]]; then
-            uninstall_klippain_answer="n"
-        fi
-        uninstall_klippain_answer="${uninstall_klippain_answer,,}"
-
-        if [[ "$uninstall_klippain_answer" =~ ^(yes|y)$ ]]; then
+        if prompt "[PRE-CHECK] Are you sure want to proceed and uninstall Klippain? (y/N) " N; then
             printf "[PRE-CHECK] Klippain will be uninstalled...\n\n"
         else
             echo "[PRE-CHECK] Klippain uninstall script was canceled!"
@@ -60,9 +55,9 @@ function preflight_checks {
     fi
 }
 
-# Step 2: Delete everything in ~/printer_data/config and the Klippain repository
+# Step 2: Delete everything in ~/printer_data/config and the Klippain repository if Klippain config found
 function delete_current_klippain {
-    if [ -d "${USER_CONFIG_PATH}" ]; then
+    if $KLIPPAIN_CONFIG_FOUND; then
         rm -rf ${USER_CONFIG_PATH}
         mkdir ${USER_CONFIG_PATH}
         printf "[UNINSTALL] Klippain user files deleted!\n\n"
@@ -80,21 +75,20 @@ function delete_current_klippain {
 
 # Step 3: Find the latest backup without a .VERSION file and restore it if needed
 function restore_latest_backup {
-    local restore_backup latest_backup 
+    local restore_backup latest_backup
+
+    if [ ! $KLIPPAIN_CONFIG_FOUND ]; then
+        printf "[RESTORE] Klippain config not found, skipping restore process...\n\n"
+        return
+    fi
 
     if [[ ! -e "${BACKUP_PATH}" ]]; then
         printf "[RESTORE] No backup folder found! Skipping...\n\n"
         return
     fi
 
-    read < /dev/tty -rp "[RESTORE] Would you like to restore your last config backup? This script will look for the last one before running Klippain (Y/n) " restore_backup
-    if [[ -z "$restore_backup" ]]; then
-        restore_backup="y"
-    fi
-    restore_backup="${restore_backup,,}"
-
     # Check and exit if the user do not wants to restore a backup
-    if [[ "$restore_backup" =~ ^(no|n)$ ]]; then
+    if ! prompt "[RESTORE] Would you like to restore your last config backup? This script will look for the last one before running Klippain (Y/n)" y; then
         printf "[RESTORE] Skipping... No backup will be restored and you will need to manually populate your own printer.cfg file!\n\n"
         return
     fi
@@ -113,6 +107,34 @@ function restart_klipper {
     echo "[RESTART] Restarting Klipper..."
     sudo systemctl restart klipper
 }
+
+#colors
+MAGENTA=$'\033[0;35m'
+DEFAULT=$'\033[0m'
+
+# Prompt function to ask Y/N questions
+prompt() {
+  local default="Yn"
+  [ $# -eq 2 ] && [ ${2^} = "N" ] && default="yN"
+ 
+  while true; do
+    read -p "${MAGENTA}$1${DEFAULT}" yn
+    case $yn in
+    [Yy]*) return 0 ;;
+    "")
+      [ $default = "yN" ] && return 1 # Return 1 if N, 0 if Y is default
+      return 0 # Return 0 on Enter key press (Y as default)
+      ;; 
+    [Nn]*) return 1 ;;
+    esac
+    line_count=$(echo $1 | wc -l)
+    for ((i=0; i<$line_count; i++)); do
+      echo -ne '\e[1A\e[K' # Move cursor up and clear line
+    done
+  done
+}
+
+KLIPPAIN_CONFIG_FOUND=false
 
 printf "\n=============================\n"
 echo "- Klippain uninstall script -"
