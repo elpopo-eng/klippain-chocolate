@@ -1,6 +1,14 @@
 ## Materials Presets Management in Klippain-Chocolate
 
-Klippain's `START_PRINT` macro, adjusts printer behavior based on material presets.
+Klippain Chocolate's `START_PRINT` macro, is able to adjust printer behavior based on material presets.
+
+> [!NOTE]
+The following `_USER_VARIABLES` parameters are not used anymore and transfered to `gcode_macro _MATERIAL` array : 
+`purge_length`,
+`standby_retract_length`, `purge_speed`, `retract_length`, `unretract_length`, `prime_line_flowrate`,
+`prime_line_pressure_length`
+
+If existing, `material_parameters` is migrated into the material array in the save_variables file.
 
 ### Default Material Settings
 
@@ -32,5 +40,5 @@ Material references are passed from the slicer to the printer via the `start_gco
 
 - `SET_MATERIAL`: Add or modify material parameters. If the `NAME` parameter is not provided, it will modify the current material. A prompt will ask if you want to retain the values across restarts. The new material will inherit default settings for any unspecified parameters.
 - `REMOVE_MATERIAL`: Delete the material. If the `NAME` parameter is not provided, it will delete the current material. A prompt will ask if you want to permanently remove the material across restarts.
-- `SELECT_MATERIAL`: Choose material settings from list. This macro is a UI helper and MUST NOT be used inside `START_PRINT`. 
+- `SELECT_MATERIAL`: Choose material settings from list. This macro is a UI helper and **MUST NOT** be used inside `START_PRINT`. 
 
