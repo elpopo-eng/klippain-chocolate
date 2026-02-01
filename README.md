@@ -1,6 +1,7 @@
-# Klippain
+# Klippain-Chocolate
 
-> Klippain - The pain-free recipe for (french)bread and butter Klipper configuration!
+> Klippain - The pain-free recipe for (french)bread and butter Klipper configuration! (Now it's better with some chocolate)
+
 
 Klippain is a generic, modular, and highly customizable Klipper configuration for 3D printers. Designed for use on various machines such as Cartesian, CoreXY and CoreXZ, it has been reported working correctly on Voron V2.4, Voron Trident, Voron V0, Voron SwitchWire, TriZero, VZbot, Ender5, Ender3, Prusas, etc...
 
@@ -25,7 +26,7 @@ To install Klippain, first ensure you have already Klipper, Moonraker, and a Web
 Then, run the installation script using the following command over SSH. This script will backup your old configuration, download this GitHub repository to your RaspberryPi home directory, and set up Klippain in `~/printer_data/config`. You will also be prompted to select and install MCU board_pins templates. This is recommended for faster `mcu.cfg` setup, but you can do it manually later if you prefer.
 
 ```bash
-wget -O - https://raw.githubusercontent.com/Frix-x/klippain/main/install.sh | bash
+wget -O - https://raw.githubusercontent.com/elpopo-eng/klippain-chocolate/main/install.sh | bash
 ```
 
 Finally, Klippain requires a few simple steps to configure and customize it for your printer: please follow the [configuration guide](./docs/configuration.md).
@@ -33,6 +34,23 @@ Finally, Klippain requires a few simple steps to configure and customize it for 
   > **Warning**:
   >
   > General rule to keep the auto-update feature working: **never modify Klippain files directly**, but instead add overrides as per [the documentation](./docs/overrides.md)! To proceed, you can modify all the pre-installed templates in your config root folder (`printer.cfg`, `mcu.cfg`, `variables.cfg` and `overrides.cfg`) as they will be preserved on update.
+
+### Installation Options
+
+The install script supports several command line options:
+
+```bash
+cd ~/klippain_config
+bash ./install.sh [-b <branch_name>] [--reinstall-templates] [--reinstall-addons]
+```
+
+Available options:
+- `-b` or `--branch`: Select Klippain branch to install
+  - `main`: Default stable branch
+  - `beta`: Advanced features branch
+  - `develop`: Latest development branch
+- `--reinstall-templates`: Regenerate MCU templates in `mcus.cfg` (previous file backed up)
+- `--reinstall-addons`: Prompt to install optional components like Shaketune
 
 
 ## Removing Klippain
@@ -42,7 +60,7 @@ In case Klippain doesn't suit your needs or if you installed it by mistake, you 
 To run the uninstall script, execute the following command over SSH:
 
 ```bash
-wget -O - https://raw.githubusercontent.com/Frix-x/klippain/main/uninstall.sh | bash
+wget -O - https://raw.githubusercontent.com/elpopo-eng/klippain-chocolate/main/uninstall.sh | bash
 ```
 
   > **Note**:
