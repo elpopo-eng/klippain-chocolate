@@ -287,7 +287,7 @@ function install_mcu_templates {
         file_list=()
         while IFS= read -r -d '' file; do
             file_list+=("$file")
-        done < <(find "${FRIX_CONFIG_PATH}/user_templates/mcu_defaults/expand" -maxdepth 1 -type f -print0)
+        done < <(find "${FRIX_CONFIG_PATH}/user_templates/mcu_defaults/expander" -maxdepth 1 -type f -print0)
         file_list=($(printf '%s\n' "${file_list[@]}" | sort))
         echo "[CONFIG] Please select your expander MCU in the following list:"
         for i in "${!file_list[@]}"; do
@@ -298,7 +298,7 @@ function install_mcu_templates {
         if [[ "$expander_template" -gt 0 ]]; then
             # If the user selected a file, copy its content into the mcu.cfg file
             filename=$(basename "${file_list[$((expander_template-1))]}")
-            cat "${FRIX_CONFIG_PATH}/user_templates/mcu_defaults/expand/$filename" >> ${USER_CONFIG_PATH}/mcu.cfg
+            cat "${FRIX_CONFIG_PATH}/user_templates/mcu_defaults/expander/$filename" >> ${USER_CONFIG_PATH}/mcu.cfg
             printf "[CONFIG] Template '$filename' inserted into your mcu.cfg user file\n\n"
         else
             printf "[CONFIG] No expander template selected. Skip and continuing...\n\n"
