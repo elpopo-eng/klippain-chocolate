@@ -11,11 +11,11 @@ This can be added either in `override.cfg` or in another file included in `overr
 ```plaintext
 # the values in the example above correspond to a 350mm bed.
 
-[mcu scanner]
+[mcu scanner]  # in `mcu.cfg` with cartographer template installed
 #canbus_uuid: 0ca8d67388c2
 #serial:/dev/serial/by-id/usb-Cartographer_614e_-if00
 
-[scanner]
+[scanner] or [cartographer]  # Old or New plugin
 #   Offsets are measured from the center of your coil to the tip of your nozzle
 #   on a level axis. It is vital that this is accurate.
 x_offset: 0                          
