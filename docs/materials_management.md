@@ -10,11 +10,14 @@ The following `_USER_VARIABLES` parameters are not used anymore and transfered t
 
 If existing, `material_parameters` is migrated into the material array in the save_variables file.
 
+
+
 ### Default Material Settings
 
 The `gcode_macro _MATERIAL` contains default values for material variables:
 ```elixir
-variable_default: {  
+variable_default: { 
+
     "pressure_advance": 0.048,
     "pressure_advance_smooth_time": 0.015,
     "retract_length": 0.5,
@@ -25,12 +28,17 @@ variable_default: {
     "additional_z_offset": 0,
     "filament_sensor": 1,
 
-    "prime_line_pressure_length": 18,   # distance to push filament to add pressure into hotend (value near purge_retract_distance if you purge before print)
-    "prime_line_purge_distance": 30,    # length of filament to purge (in mm)
+    "standby_retract_length": 20,       # Amount to retract after purge or endprint (in mm) to place filament in standby zone (Should be near the prime_pressure_lenght)
+
+    "prime_line_pressure_length": 18,   # distance to push filament to add  pressure into hotend (value near standby_retract_length if you purge before print )
+    "prime_line_purge_length": 30,      # length of filament to purge (in mm)
     "prime_line_flowrate": 10,          # mm3/s used for the prime line
-    "purge_retract_distance": 20,       # Amount to retract after purge (in mm) (Should be near the prime_pressure_length)
-    "purge_speed": 2.5,                 # Speed to purge (in mm/s)
-    "purge_distance": 30,               # Amount to purge (in mm)
+
+    # DEPRECATED "purge_speed": 2.5,    # Speed to purge (in mm/s)
+    
+    "purge_flowrate": 6,                # flowrate to purge (in mm3/s)
+    "purge_length": 30,                 # Amount to purge (in mm)
+
     }
 ```
 
