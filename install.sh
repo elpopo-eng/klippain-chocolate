@@ -289,6 +289,31 @@ function install_mcu_templates {
         fi
     fi
 
+    # Next see if the user use a Scanner type Cartographer3D
+    # Check if the user wants to install a Scanner MCU template
+    if prompt "[CONFIG] Do you have an Scanner (like Cartographer3D) MCU and want to install a template? (y/N) " n; then
+        file_list=()
+        while IFS= read -r -d '' file; do
+            file_list+=("$file")
+        done < <(find "${FRIX_CONFIG_PATH}/user_templates/mcu_defaults/scanner" -maxdepth 1 -type f -print0)
+        file_list=($(printf '%s\n' "${file_list[@]}" | sort))
+        echo "[CONFIG] Please select your Scanner MCU in the following list:"
+        for i in "${!file_list[@]}"; do
+            echo "  $((i+1))) $(basename "${file_list[i]}")"
+        done
+
+        read < /dev/tty -p "[CONFIG] Template to install (or 0 to skip): " scanner_template
+        if [[ "$scanner_template" -gt 0 ]]; then
+            # If the user selected a file, copy its content into the mcu.cfg file
+            filename=$(basename "${file_list[$((scanner_template-1))]}")
+            cat "${FRIX_CONFIG_PATH}/user_templates/mcu_defaults/scanner/$filename" >> ${USER_CONFIG_PATH}/mcu.cfg
+            echo "[CONFIG] Template '$filename' inserted into your mcu.cfg user file"
+            printf "[CONFIG] Note: keep in mind that you have to install the Cartographer3D backend manually to use a cartographer scanner. See the Klippain documentation for more information!\n\n"
+        else
+            printf "[CONFIG] No scanner template selected. Skip and continuing...\n\n"
+        fi
+    fi
+
    # Finally see if the user use an expander board
     # Check if the user wants to install an expander MCU template
     if prompt "[CONFIG] Do you have an expander board and want to install a template? (y/N) " n; then
