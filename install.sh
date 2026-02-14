@@ -178,9 +178,17 @@ function install_config {
     elif $REINSTALL_TEMPLATES; then
         echo "[INSTALL] Reinstalling config templates as requested by user!"
         echo -e "[INSTALL] ${RED}WARNING: this will OVERWRITE your current mcu.cfg file!${DEFAULT}"
-        prompt "[INSTALL] Are you sure you want to reinstall the config templates? (y/N)" n &&
+        if prompt "[INSTALL] Are you sure you want to reinstall the config templates? (y/N)" n; then
+                # Backup the old mcu.cfg before overwriting it
+            if [ -f "${USER_CONFIG_PATH}/mcu.cfg" ]; then
+                local backup_name="mcu.cfg.$(date +'%y-%m-%d_%H%M').sav"
+                echo "[INSTALL] backup of the old mcu.cfg under the name ${backup_name}"
+                cp "${USER_CONFIG_PATH}/mcu.cfg" "${USER_CONFIG_PATH}/${backup_name}"
+            fi
+        # File Reset
         cat /dev/null > ${USER_CONFIG_PATH}/mcu.cfg &&
         install_mcu_templates
+        fi
     else
         printf "[INSTALL] Existing installation detected: skipping config templates installation!\n\n"
     fi
