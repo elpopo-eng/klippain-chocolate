@@ -28,7 +28,7 @@ def check_service(service_name):
 
 def restart_service(service_name):
     # Command to restart the service
-    cmd = ['systemctl', 'restart', service_name]
+    cmd = ['sudo', 'systemctl', 'restart', service_name]
     
     # Run the command
     subprocess.run(cmd, check=True)
