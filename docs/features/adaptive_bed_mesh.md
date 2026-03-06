@@ -56,11 +56,6 @@ If you want to install it to your own custom config, here is the way to go:
 
   4. **VERY IMPORTANT CHECKS**:
      - Check that the `BED_MESH_CALIBRATE` command is working correctly now or fix your `[bed_mesh]` section.
-     - Check that the `mesh_min`, `mesh_max`, `probe_count` and `mesh_pps` config entries in your `[bed_mesh]` section are specified using **TWO numbers** as my macro is waiting for it and will fail if there is only one specified. Something like this is ok:
-
-       ```
-       probe_count: 9,9
-       ```
 
   5. My macro is using the `RESPOND` command of Klipper for debugging purposes. So, you need to: either be sure there is a `[respond]` section in your config (or add it). Or, if you don't want to see the messages, delete all the `RESPOND msg=...` lines.
 
@@ -90,11 +85,11 @@ In your klipper config, modify your `PRINT_START` macro definition by adding two
 </details>
 
 
-Regarding the parameters availables, you can use them either when calling the `ADAPTIVE_BED_MESH` macro or the `COMPUTE_MESH_PARAMETERS` macro. Please see this table for details:
+Regarding the parameters availables, you can use them when calling the `ADAPTIVE_BED_MESH` macro. Please see this table for details:
 
 | parameters | default value | description |
 |-----------:|---------------|-------------|
-|SIZE||"xMin_yMin_xMax_yMax" of the zone you want to do the mesh. Usually this is coming automatically from the slicer but this can still be used mannually when you want to call the adaptive mesh macro by hand (not during a print)|
+|SIZE||"xMin_yMin_xMax_yMax" of the zone you want to do the mesh. Usually this is coming automatically from the slicer but this can still be used manually when you want to call the adaptive mesh macro by hand (not during a print)|
 |MARGIN|5|margin in mm to add around the first layer for the probing area|
 |FORCE_MESH|0|force a 3×3 mesh even for very small parts (when less than 3×3 points are computed)|
 
